@@ -6,3 +6,14 @@ services:
         volumes:
             - ./data/prometheus:/etc/prometheus
         image: prom/prometheus
+    
+    simple-app:
+        build:
+            context: ./simple-app
+            dockerfile: ./simple-app.dockerfile
+        restart: always
+        ports:
+        - "2112:2112"
+        deploy:
+            mode: replicated
+            replicas: 1
