@@ -7,7 +7,20 @@ services:
             - ./data/prometheus:/etc/prometheus
         image: prom/prometheus
     
-    simple-app:
+    simple-app-01:
+        build:
+            context: ./simple-app
+            dockerfile: ./simple-app.dockerfile
+        restart: always
+        ports:
+        - "2111:2112"
+        deploy:
+            mode: replicated
+            replicas: 1
+        environment:
+            - APP_NAME=app_01
+    
+    simple-app-02:
         build:
             context: ./simple-app
             dockerfile: ./simple-app.dockerfile
@@ -17,3 +30,18 @@ services:
         deploy:
             mode: replicated
             replicas: 1
+        environment:
+            - APP_NAME=app_02
+    
+    simple-app-03:
+        build:
+            context: ./simple-app
+            dockerfile: ./simple-app.dockerfile
+        restart: always
+        ports:
+        - "2113:2112"
+        deploy:
+            mode: replicated
+            replicas: 1
+        environment:
+            - APP_NAME=app_03
