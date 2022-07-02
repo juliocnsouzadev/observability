@@ -17,30 +17,30 @@ var (
 
 	counter = prometheus.NewCounter(
 		prometheus.CounterOpts{
-			Namespace: "golang",
-			Name:      fmt.Sprintf("%s_counter", appName),
-			Help:      "This is my counter",
+			Namespace: "app_api",
+			Name:      "counter",
+			Help:      fmt.Sprintf("This is a counter for %s", appName),
 		})
 
 	gauge = prometheus.NewGauge(
 		prometheus.GaugeOpts{
-			Namespace: "golang",
-			Name:      fmt.Sprintf("%s_gauge", appName),
-			Help:      "This is my gauge",
+			Namespace: "app_api",
+			Name:      "gauge",
+			Help:      fmt.Sprintf("This is a gauge for %s", appName),
 		})
 
 	histogram = prometheus.NewHistogram(
 		prometheus.HistogramOpts{
-			Namespace: "golang",
-			Name:      fmt.Sprintf("%s_histogram", appName),
-			Help:      "This is my histogram",
+			Namespace: "app_api",
+			Name:      "histogram",
+			Help:      fmt.Sprintf("This is a histogram for %s", appName),
 		})
 
 	summary = prometheus.NewSummary(
 		prometheus.SummaryOpts{
-			Namespace: "golang",
-			Name:      fmt.Sprintf("%s_summary", appName),
-			Help:      "This is my summary",
+			Namespace: "app_api",
+			Name:      "summary",
+			Help:      fmt.Sprintf("This is a summary for %s", appName),
 		})
 )
 
@@ -62,11 +62,14 @@ func main() {
 	prometheus.MustRegister(summary)
 
 	go func() {
+
+		factor := float64(rand.Intn(10))
+		
 		for {
-			counter.Add(rand.Float64() * 5)
-			gauge.Add(rand.Float64()*15 - 5)
-			histogram.Observe(rand.Float64() * 10)
-			summary.Observe(rand.Float64() * 10)
+			counter.Add(rand.Float64() * factor)
+			gauge.Add(rand.Float64()*factor - 5)
+			histogram.Observe(rand.Float64() * factor)
+			summary.Observe(rand.Float64() * factor)
 
 			time.Sleep(time.Second * 2)
 		}
