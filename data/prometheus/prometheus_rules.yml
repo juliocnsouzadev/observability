@@ -1,0 +1,5 @@
+groups:
+  - name: custom_rules
+    rules:
+      - record: expend_over_sales_percentage
+        expr: 100 - (100 * app_api_expend_value_histogram_sum / app_api_sales_value_histogram_sum)
