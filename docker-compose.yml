@@ -6,6 +6,16 @@ services:
         volumes:
             - ./data/prometheus:/etc/prometheus
         image: prom/prometheus
+        restart: always
+
+    alertmanager:
+        ports:
+            - '9093:9093'
+        volumes:
+            - ./data/alertmanager/:/etc/alertmanager/
+        image: prom/alertmanager:v0.12.0
+        deploy:
+            mode: global
     
     simple-app-01:
         build:
